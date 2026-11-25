@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+
+<div class="barra">
+  <h1>Pacientes</h1>
+  <a class="btn btn-primario" href="/pacientes/novo">Novo paciente</a>
+</div>
+
+<% if (pacientes.length === 0) { %>
+  <p class="vazio">Nenhum paciente cadastrado.</p>
+<% } else { %>
+  <div class="tabela-wrap">
+    <table>
+      <thead>
+        <tr><th>Nome</th><th>CPF</th><th>Telefone</th><th>Nascimento</th><th></th></tr>
+      </thead>
+      <tbody>
+        <% pacientes.forEach(p => { %>
+          <tr>
+            <td><%= p.Nome %></td>
+            <td><%= p.Cpf %></td>
+            <td><%= p.Telefone %></td>
+            <td><%= fmtData(p.DataNascimento) %></td>
+            <td class="acoes">
+              <a class="btn btn-pequeno" href="/pacientes/<%= p.Codigo %>/editar">Editar</a>
+              <form method="post" action="/pacientes/<%= p.Codigo %>/excluir" class="inline"
+                    onsubmit="return confirm('Excluir este paciente?');">
+                <button class="btn btn-pequeno btn-perigo" type="submit">Excluir</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="barra">
+  <h1>Minhas consultas</h1>
+  <a class="btn btn-primario" href="/consultas/nova">Agendar consulta</a>
+</div>
+
+<% if (consultas.length === 0) { %>
+  <p class="vazio">Você ainda não tem consultas. Clique em “Agendar consulta” para marcar a primeira.</p>
+<% } else { %>
+  <div class="tabela-wrap">
+    <table>
+      <thead>
+        <tr><th>Data e hora</th><th>Médico</th><th>Especialidade</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody>
+        <% consultas.forEach(c => { %>
+          <tr>
+            <td><%= fmtDataHora(c.DataHora) %></td>
+            <td><%= c.Medico %></td>
+            <td><%= c.Especialidade %></td>
+            <td><span class="status status-<%= c.StatusConsulta.toLowerCase() %>"><%= c.StatusConsulta %></span></td>
+            <td class="acoes">
+              <% if (c.StatusConsulta === 'Agendada') { %>
+                <form method="post" action="/consultas/<%= c.Codigo %>/status" class="inline">
+                  <input type="hidden" name="status" value="Realizada">
+                  <button class="btn btn-pequeno" type="submit">Marcar como realizada</button>
+                </form>
+                <form method="post" action="/consultas/<%= c.Codigo %>/status" class="inline"
+                      onsubmit="return confirm('Cancelar esta consulta?');">
+                  <input type="hidden" name="status" value="Cancelada">
+                  <button class="btn btn-pequeno btn-perigo" type="submit">Cancelar</button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>

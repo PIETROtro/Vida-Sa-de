@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+
+<div class="cartao cartao-form">
+  <div class="cartao-topo"><h1><%= title %></h1></div>
+  <form method="post" action="<%= acao %>" class="cartao-corpo">
+    <% if (erro) { %><div class="aviso aviso-erro"><%= erro %></div><% } %>
+
+    <label for="nome">Nome</label>
+    <input id="nome" name="nome" maxlength="100" value="<%= paciente.Nome || '' %>" required>
+
+    <label for="cpf">CPF</label>
+    <input id="cpf" name="cpf" maxlength="14" placeholder="111.222.333-44" inputmode="numeric" value="<%= paciente.Cpf || '' %>" required>
+
+    <label for="telefone">Telefone</label>
+    <input id="telefone" name="telefone" maxlength="20" placeholder="(11) 98888-7777" value="<%= paciente.Telefone || '' %>" required>
+
+    <label for="dataNascimento">Data de nascimento</label>
+    <input id="dataNascimento" name="dataNascimento" type="date" value="<%= valorData(paciente.DataNascimento) %>" required>
+
+    <div class="botoes">
+      <button class="btn btn-primario" type="submit">Salvar</button>
+      <a class="btn" href="<%= cancelar %>">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

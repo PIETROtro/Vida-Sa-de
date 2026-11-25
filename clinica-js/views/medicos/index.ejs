@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+
+<div class="barra">
+  <h1>Médicos</h1>
+  <a class="btn btn-primario" href="/medicos/novo">Novo médico</a>
+</div>
+
+<% if (medicos.length === 0) { %>
+  <p class="vazio">Nenhum médico cadastrado.</p>
+<% } else { %>
+  <div class="tabela-wrap">
+    <table>
+      <thead>
+        <tr><th>Nome</th><th>CRM</th><th>Especialidade</th><th></th></tr>
+      </thead>
+      <tbody>
+        <% medicos.forEach(m => { %>
+          <tr>
+            <td><%= m.Nome %></td>
+            <td><%= m.Crm %></td>
+            <td><%= m.Especialidade %></td>
+            <td class="acoes">
+              <a class="btn btn-pequeno" href="/medicos/<%= m.Codigo %>/editar">Editar</a>
+              <form method="post" action="/medicos/<%= m.Codigo %>/excluir" class="inline"
+                    onsubmit="return confirm('Excluir este médico?');">
+                <button class="btn btn-pequeno btn-perigo" type="submit">Excluir</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>

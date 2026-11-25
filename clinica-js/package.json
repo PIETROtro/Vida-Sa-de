@@ -1,0 +1,20 @@
+{
+  "name": "clinica-vida-saude",
+  "version": "1.0.0",
+  "description": "Sistema de agendamento de consultas da Clínica Médica Vida & Saúde (Node.js + Express + SQL Server)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "mssql": "^11.0.1"
+  }
+}

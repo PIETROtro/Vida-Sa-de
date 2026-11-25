@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="cartao cartao-form">
+  <div class="cartao-topo"><h1>Agendar consulta</h1></div>
+  <form method="post" action="/consultas" class="cartao-corpo">
+    <% if (erro) { %><div class="aviso aviso-erro"><%= erro %></div><% } %>
+
+    <label>Paciente</label>
+    <input value="<%= usuario.nome %>" disabled>
+
+    <label for="medicoId">Médico</label>
+    <select id="medicoId" name="medicoId" required>
+      <option value="">Selecione…</option>
+      <% medicos.forEach(m => { %>
+        <option value="<%= m.Codigo %>" <%= Number(valores.medicoId) === m.Codigo ? 'selected' : '' %>>
+          <%= m.Nome %> — <%= m.Especialidade %>
+        </option>
+      <% }) %>
+    </select>
+
+    <label for="dataHora">Data e hora</label>
+    <input id="dataHora" name="dataHora" type="datetime-local" value="<%= valores.dataHora || '' %>" required>
+
+    <p class="dica">Cada paciente pode ter apenas uma consulta por dia. A consulta é criada com o status “Agendada”.</p>
+
+    <div class="botoes">
+      <button class="btn btn-primario" type="submit">Agendar</button>
+      <a class="btn" href="/consultas">Voltar</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Impede escolher datas no passado
+  (function () {
+    var campo = document.getElementById('dataHora');
+    var agora = new Date();
+    agora.setMinutes(agora.getMinutes() - agora.getTimezoneOffset());
+    campo.min = agora.toISOString().slice(0, 16);
+  })();
+</script>
+
+<%- include('../partials/footer') %>
